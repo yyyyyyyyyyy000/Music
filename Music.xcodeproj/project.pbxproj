@@ -24,6 +24,7 @@
 		B59291FC223D39DD00501F22 /* 不将就.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B59291F8223D39DD00501F22 /* 不将就.jpg */; };
 		B59291FD223D39DD00501F22 /* 孤岛.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B59291F9223D39DD00501F22 /* 孤岛.jpg */; };
 		B5929201223D48E400501F22 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5929200223D48E400501F22 /* MusicModel.swift */; };
+		B5929203223DF74600501F22 /* FavoriteSongsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5929202223DF74600501F22 /* FavoriteSongsTable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		B59291F8223D39DD00501F22 /* 不将就.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "不将就.jpg"; sourceTree = "<group>"; };
 		B59291F9223D39DD00501F22 /* 孤岛.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "孤岛.jpg"; sourceTree = "<group>"; };
 		B5929200223D48E400501F22 /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
+		B5929202223DF74600501F22 /* FavoriteSongsTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsTable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				B59291B2223D13B000501F22 /* Main.storyboard */,
 				B5929200223D48E400501F22 /* MusicModel.swift */,
 				B59291EC223D182D00501F22 /* MusicPlayer.swift */,
+				B5929202223DF74600501F22 /* FavoriteSongsTable.swift */,
 				B59291F0223D186600501F22 /* MusicUI.swift */,
 				B59291C9223D141400501F22 /* MusicListTableViewController.swift */,
 				B59291B5223D13B000501F22 /* Assets.xcassets */,
@@ -197,6 +200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B59291AF223D13B000501F22 /* AppDelegate.swift in Sources */,
+				B5929203223DF74600501F22 /* FavoriteSongsTable.swift in Sources */,
 				B59291CA223D141400501F22 /* MusicListTableViewController.swift in Sources */,
 				B59291ED223D182D00501F22 /* MusicPlayer.swift in Sources */,
 				B5929201223D48E400501F22 /* MusicModel.swift in Sources */,

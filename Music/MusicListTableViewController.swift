@@ -10,7 +10,6 @@ import UIKit
 
 class MusicListTableViewController: UITableViewController {
     //var namesOfMusic = ["2U","孤岛","不将就","曹操"]
-    var musicmodel = MusicModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,14 +22,13 @@ class MusicListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return musicmodel.namesOfMusic.count
+        return MusicModel.shared.namesOfMusic.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "music", for: indexPath)
-        cell.textLabel?.text = musicmodel.namesOfMusic[indexPath.row]
-
+        cell.textLabel?.text = MusicModel.shared.namesOfMusic[indexPath.row]
         return cell
     }
     
@@ -38,8 +36,8 @@ class MusicListTableViewController: UITableViewController {
         let cell = sender as? UITableViewCell
         let indexpath = tableView.indexPath(for: cell!)
         if let destination = segue.destination as? MusicPlayer{
-            destination.title = musicmodel.namesOfMusic[indexpath?.row ?? 0]
-            destination.theNameOfMusic = musicmodel.namesOfMusic[indexpath?.row ?? 0]
+            destination.title = MusicModel.shared.namesOfMusic[indexpath?.row ?? 0]
+            destination.theNameOfMusic = MusicModel.shared.namesOfMusic[indexpath?.row ?? 0]
         }
     }
     
