@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B53C11C4223FD0320083AF76 /* MusicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53C11C3223FD0320083AF76 /* MusicListViewController.swift */; };
 		B59291AF223D13B000501F22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59291AE223D13B000501F22 /* AppDelegate.swift */; };
 		B59291B4223D13B000501F22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B59291B2223D13B000501F22 /* Main.storyboard */; };
 		B59291B6223D13B000501F22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59291B5223D13B000501F22 /* Assets.xcassets */; };
@@ -15,7 +16,6 @@
 		B59291C6223D13D100501F22 /* 曹操.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B59291C2223D13D000501F22 /* 曹操.mp3 */; };
 		B59291C7223D13D100501F22 /* 孤岛.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B59291C3223D13D000501F22 /* 孤岛.mp3 */; };
 		B59291C8223D13D100501F22 /* 2U.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B59291C4223D13D100501F22 /* 2U.mp3 */; };
-		B59291CA223D141400501F22 /* MusicListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59291C9223D141400501F22 /* MusicListTableViewController.swift */; };
 		B59291EB223D17D400501F22 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59291EA223D17D400501F22 /* AVFoundation.framework */; };
 		B59291ED223D182D00501F22 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59291EC223D182D00501F22 /* MusicPlayer.swift */; };
 		B59291F1223D186600501F22 /* MusicUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59291F0223D186600501F22 /* MusicUI.swift */; };
@@ -25,9 +25,15 @@
 		B59291FD223D39DD00501F22 /* 孤岛.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B59291F9223D39DD00501F22 /* 孤岛.jpg */; };
 		B5929201223D48E400501F22 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5929200223D48E400501F22 /* MusicModel.swift */; };
 		B5929203223DF74600501F22 /* FavoriteSongsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5929202223DF74600501F22 /* FavoriteSongsTable.swift */; };
+		B5B0CC2422408A49000E8972 /* CustomTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0CC2322408A49000E8972 /* CustomTabbarController.swift */; };
+		B5B0CC2822408B0D000E8972 /* CustomMusicPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0CC2722408B0D000E8972 /* CustomMusicPlayerController.swift */; };
+		B5B0CC2A2240AF5E000E8972 /* 粤语.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5B0CC292240AF5E000E8972 /* 粤语.jpg */; };
+		B5B0CC2C2240B4CC000E8972 /* 抖音.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5B0CC2B2240B4CC000E8972 /* 抖音.jpg */; };
+		B5B0CC2E2240BBFF000E8972 /* CommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0CC2D2240BBFF000E8972 /* CommentsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B53C11C3223FD0320083AF76 /* MusicListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListViewController.swift; sourceTree = "<group>"; };
 		B59291AB223D13B000501F22 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B59291AE223D13B000501F22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B59291B3223D13B000501F22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,7 +44,6 @@
 		B59291C2223D13D000501F22 /* 曹操.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "曹操.mp3"; sourceTree = "<group>"; };
 		B59291C3223D13D000501F22 /* 孤岛.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "孤岛.mp3"; sourceTree = "<group>"; };
 		B59291C4223D13D100501F22 /* 2U.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 2U.mp3; sourceTree = "<group>"; };
-		B59291C9223D141400501F22 /* MusicListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListTableViewController.swift; sourceTree = "<group>"; };
 		B59291EA223D17D400501F22 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B59291EC223D182D00501F22 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		B59291F0223D186600501F22 /* MusicUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicUI.swift; sourceTree = "<group>"; };
@@ -48,6 +53,11 @@
 		B59291F9223D39DD00501F22 /* 孤岛.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "孤岛.jpg"; sourceTree = "<group>"; };
 		B5929200223D48E400501F22 /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
 		B5929202223DF74600501F22 /* FavoriteSongsTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsTable.swift; sourceTree = "<group>"; };
+		B5B0CC2322408A49000E8972 /* CustomTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbarController.swift; sourceTree = "<group>"; };
+		B5B0CC2722408B0D000E8972 /* CustomMusicPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMusicPlayerController.swift; sourceTree = "<group>"; };
+		B5B0CC292240AF5E000E8972 /* 粤语.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "粤语.jpg"; sourceTree = "<group>"; };
+		B5B0CC2B2240B4CC000E8972 /* 抖音.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "抖音.jpg"; sourceTree = "<group>"; };
+		B5B0CC2D2240BBFF000E8972 /* CommentsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,11 +94,14 @@
 			children = (
 				B59291C0223D13C000501F22 /* Supporting files */,
 				B59291B2223D13B000501F22 /* Main.storyboard */,
+				B5B0CC2322408A49000E8972 /* CustomTabbarController.swift */,
+				B5B0CC2D2240BBFF000E8972 /* CommentsTableViewController.swift */,
+				B5B0CC2722408B0D000E8972 /* CustomMusicPlayerController.swift */,
+				B53C11C3223FD0320083AF76 /* MusicListViewController.swift */,
 				B5929200223D48E400501F22 /* MusicModel.swift */,
 				B59291EC223D182D00501F22 /* MusicPlayer.swift */,
 				B5929202223DF74600501F22 /* FavoriteSongsTable.swift */,
 				B59291F0223D186600501F22 /* MusicUI.swift */,
-				B59291C9223D141400501F22 /* MusicListTableViewController.swift */,
 				B59291B5223D13B000501F22 /* Assets.xcassets */,
 				B59291BA223D13B000501F22 /* Info.plist */,
 			);
@@ -98,10 +111,12 @@
 		B59291C0223D13C000501F22 /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				B5B0CC2B2240B4CC000E8972 /* 抖音.jpg */,
 				B59291F6223D39DD00501F22 /* 2U.jpg */,
 				B59291F8223D39DD00501F22 /* 不将就.jpg */,
 				B59291F7223D39DD00501F22 /* 曹操.jpg */,
 				B59291F9223D39DD00501F22 /* 孤岛.jpg */,
+				B5B0CC292240AF5E000E8972 /* 粤语.jpg */,
 				B59291C2223D13D000501F22 /* 曹操.mp3 */,
 				B59291C1223D13CF00501F22 /* 不将就.mp3 */,
 				B59291C3223D13D000501F22 /* 孤岛.mp3 */,
@@ -178,8 +193,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B0CC2C2240B4CC000E8972 /* 抖音.jpg in Resources */,
 				B59291C6223D13D100501F22 /* 曹操.mp3 in Resources */,
 				B59291B9223D13B000501F22 /* LaunchScreen.storyboard in Resources */,
+				B5B0CC2A2240AF5E000E8972 /* 粤语.jpg in Resources */,
 				B59291B6223D13B000501F22 /* Assets.xcassets in Resources */,
 				B59291C8223D13D100501F22 /* 2U.mp3 in Resources */,
 				B59291FC223D39DD00501F22 /* 不将就.jpg in Resources */,
@@ -201,10 +218,13 @@
 			files = (
 				B59291AF223D13B000501F22 /* AppDelegate.swift in Sources */,
 				B5929203223DF74600501F22 /* FavoriteSongsTable.swift in Sources */,
-				B59291CA223D141400501F22 /* MusicListTableViewController.swift in Sources */,
 				B59291ED223D182D00501F22 /* MusicPlayer.swift in Sources */,
+				B5B0CC2822408B0D000E8972 /* CustomMusicPlayerController.swift in Sources */,
 				B5929201223D48E400501F22 /* MusicModel.swift in Sources */,
+				B5B0CC2422408A49000E8972 /* CustomTabbarController.swift in Sources */,
 				B59291F1223D186600501F22 /* MusicUI.swift in Sources */,
+				B53C11C4223FD0320083AF76 /* MusicListViewController.swift in Sources */,
+				B5B0CC2E2240BBFF000E8972 /* CommentsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +371,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8L7M35DL93;
 				INFOPLIST_FILE = Music/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -368,7 +390,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8L7M35DL93;
 				INFOPLIST_FILE = Music/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
