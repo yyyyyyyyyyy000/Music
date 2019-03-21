@@ -49,8 +49,8 @@ class CustomMusicPlayerController: UIViewController {
         didSet{
             var path:URL?
             switch TypeOfMusic!{
-            case .Cantonese: path = Bundle.main.url(forResource: "粤语", withExtension: "jpg")
-            case .thrill: path = Bundle.main.url(forResource: "抖音", withExtension: "jpg")
+            case .Cantonese: path = Bundle.main.url(forResource: "粤语2", withExtension: "jpg")
+            case .thrill: path = Bundle.main.url(forResource: "抖音2", withExtension: "jpg")
             }
             let imageData = try! Data(contentsOf: path!)
             let image = UIImage(data: imageData)
@@ -84,11 +84,6 @@ class CustomMusicPlayerController: UIViewController {
             let request = URLRequest(url: playURL!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
             let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, _, _) in
                 let jsondata = (((((try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary)["data"]) as! NSArray).firstObject as! NSDictionary)["url"] as! String
-                let str = String(data: data!, encoding: .utf8)
-                print(str!)
-                print("s")
-                print(jsondata)
-                print("s")
                 let newjsondata = URL(string: jsondata)
                 let musicData = try! Data(contentsOf: newjsondata!)
                 self.player = try! AVAudioPlayer(data: musicData)
@@ -101,11 +96,11 @@ class CustomMusicPlayerController: UIViewController {
     
     @IBOutlet weak var PlayOrStop: UIButton!
     @IBAction func PlayOrStop(_ sender: UIButton) {
-        if sender.currentTitle == "⏹"{
-            sender.setTitle("▶️", for: .normal)
+        if sender.currentTitle == "⌛"{
+            sender.setTitle("➣", for: .normal)
             player?.stop()
         }else{
-            sender.setTitle("⏹", for: .normal)
+            sender.setTitle("⌛", for: .normal)
             player?.play()
         }
     }

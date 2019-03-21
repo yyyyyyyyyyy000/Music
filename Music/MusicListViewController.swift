@@ -8,15 +8,18 @@
 
 import UIKit
 
-class MusicListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate {
+class MusicListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
     
+   
     @IBOutlet weak var SearchField: UITextField!{
         didSet{
             SearchField.delegate = self
+            SearchField.placeholder = "search for music"
+            SearchField.textAlignment = NSTextAlignment.right
         }
     }
     var searchMusic:String?
-    
+   
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         SearchField.resignFirstResponder()
         return true
@@ -48,21 +51,27 @@ class MusicListViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let view = UIImageView(image: UIImage(named: "地球"))
+        view.alpha = 0.8
+        ListTablView.backgroundView = view
         ListTablView.delegate = self
         ListTablView.dataSource = self
+        ListTablView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier{
         case "normal":
             let cell = sender as? UITableViewCell
             let indexpath = self.ListTablView.indexPath(for: cell!)
-            if let destination = segue.destination as? MusicPlayer{
+            let tempDestination = segue.destination as! UINavigationController
+            if  let destination = tempDestination.visibleViewController as? MusicPlayer{
                 destination.title = MusicModel.shared.namesOfMusic[indexpath?.row ?? 0]
                 destination.theNameOfMusic = MusicModel.shared.namesOfMusic[indexpath?.row ?? 0]
             }
         case "search":
-            let destination = segue.destination as? MusicPlayer
-            destination!.searchMusic = searchMusic!
+            let tempDestination = segue.destination as! UINavigationController
+            let destination = tempDestination.visibleViewController as? MusicPlayer
+            destination!.searchMusic = searchMusic ?? "baby"
         case "粤语":
             let destination = segue.destination as! UITabBarController
             let FinalDestination = destination.viewControllers?.first as! CustomMusicPlayerController

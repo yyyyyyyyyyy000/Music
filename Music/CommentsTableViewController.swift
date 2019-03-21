@@ -18,6 +18,7 @@ class CommentsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         for _ in 0...30{
             let str = ""
             strArray.append(str)

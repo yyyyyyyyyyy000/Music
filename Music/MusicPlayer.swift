@@ -8,14 +8,17 @@
 
 import UIKit
 import AVFoundation
-class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource {
+import MobileCoreServices
+class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIDropInteractionDelegate {
     
     
-   
     
     
     
-    var theNameOfMusic:String?
+    
+    
+    
+    var theNameOfMusic = "不将就"
     var stylusImage = UIImage(named: "stylus")
     @IBOutlet weak var stylus: UIImageView!{
         didSet{
@@ -28,9 +31,10 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
             lyricsList.separatorStyle = UITableViewCell.SeparatorStyle.none
             let tapgesture = UITapGestureRecognizer(target: self, action: #selector(changeToPlayer))
             lyricsList.addGestureRecognizer(tapgesture)
+            
         }
     }
-   
+    
     
     
     
@@ -47,18 +51,18 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     @IBOutlet weak var randomOrsequencePlay: UIButton!{
         didSet{
             switch playmode{
-            case .random: randomOrsequencePlay.setTitle("🔀", for: .normal)
-            case .sequence: randomOrsequencePlay.setTitle("🔁", for: .normal)
-            case .cycle:randomOrsequencePlay.setTitle("🔂", for: .normal)
+            case .random: randomOrsequencePlay.setTitle("⇋", for: .normal)
+            case .sequence: randomOrsequencePlay.setTitle("➼", for: .normal)
+            case .cycle:randomOrsequencePlay.setTitle("↺", for: .normal)
             }
         }
     }
     
     @IBAction func ChangeTheModeOfPlay(_ sender: UIButton) {
         switch playmode{
-        case .sequence:sender.setTitle("🔀", for: .normal);playmode = .random
-        case .random:sender.setTitle("🔂", for: .normal); playmode = .cycle
-        case .cycle:sender.setTitle("🔁", for: .normal);playmode = .sequence
+        case .sequence:sender.setTitle("⇋", for: .normal);playmode = .random
+        case .random:sender.setTitle("↺", for: .normal); playmode = .cycle
+        case .cycle:sender.setTitle("➼", for: .normal);playmode = .sequence
         }
     }
     
@@ -81,31 +85,43 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     var time: Timer!
     var theCurrentTimeOfMusic = 0
     
+    @IBOutlet weak var PhotoButton: UIBarButtonItem!{
+        didSet{
+            PhotoButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        }
+    }
+    func scaleImage(image:UIImage , newSize:CGSize)->UIImage{
+        let imageSize = image.size
+        let width = imageSize.width
+        let height = imageSize.height
+        let widthFactor = newSize.width/width
+        let heightFactor = newSize.height/height
+        let scalerFactor = (widthFactor < heightFactor) ? widthFactor : heightFactor
+        let scaledWidth = width * scalerFactor
+        let scaledHeight = height * scalerFactor
+        let targetSize = CGSize(width: scaledWidth, height: scaledHeight)
+        UIGraphicsBeginImageContext(targetSize)
+        image.draw(in: CGRect(x: 0, y: 0, width: scaledWidth, height: scaledHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        return newImage!
+    }
     
     @IBOutlet weak var ProgressSlider: UISlider!{
         didSet{
+            let image = UIImage(named: "星球")
+            let newImage = scaleImage(image: image!, newSize: CGSize(width: 25, height: 25))
+            ProgressSlider.setThumbImage(newImage, for: .normal)
             ProgressSlider.minimumValue = 0
             if searchMusic == nil{
-            let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic!)
-            ProgressSlider.maximumValue = Float(MusicModel.shared.theTimeOfMusic[index!])
-            ProgressSlider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+                let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic)
+                ProgressSlider.maximumValue = Float(MusicModel.shared.theTimeOfMusic[index!])
+                ProgressSlider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
             }
         }
     }
     
     
-    @IBOutlet weak var volumeSlider: UISlider!{
-        didSet{
-            if searchMusic == nil{
-            player.volume = volumeSlider.value
-            volumeSlider.addTarget(self, action: #selector(volumeChanged), for: .valueChanged)
-            }
-        }
-    }
-    
-    @objc private func volumeChanged(_ sender:UISlider){
-        player.volume = sender.value
-    }
+  
     
     
     @IBOutlet weak var LikeOrDislikeLabel: UIButton!
@@ -124,13 +140,17 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     @IBOutlet weak var TrackOfTime: UILabel!{
         didSet{
             if searchMusic == nil{
-            let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic!)
-            let time = MusicModel.shared.theTimeOfMusic[index!]
-            TrackOfTime.text = converTime(time: time)
+                let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic)
+                let time = MusicModel.shared.theTimeOfMusic[index!]
+                TrackOfTime.text = converTime(time: time)
             }
         }
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        player.stop()
+        searchplayer?.stop()
+    }
     @IBOutlet weak var CurrentTimeLabel: UILabel!{
         didSet{
             CurrentTimeLabel.text = converTime(time: 0)
@@ -150,22 +170,34 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
             weburl = URL(string:str!)
             let request = URLRequest(url: weburl!, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
+                let str = String(data: data!, encoding: .utf8)
+                print(str!)
                 self.searchplayer = try! AVAudioPlayer(data: data!)
+                self.searchplayer!.play()
             }
             task.resume()
             
         }
     }
+    
+    @IBOutlet weak var DropZone: UIView!
+    
+    
+    
+    
     var searchplayer:AVAudioPlayer?
-    lazy var path = Bundle.main.url(forResource: theNameOfMusic!, withExtension: "mp3")
-    lazy var imagePath = Bundle.main.url(forResource: theNameOfMusic!, withExtension: "jpg")
+    lazy var path = Bundle.main.url(forResource: theNameOfMusic, withExtension: "mp3")
+    lazy var imagePath = Bundle.main.url(forResource: theNameOfMusic, withExtension: "jpg")
     lazy var player = try! AVAudioPlayer(contentsOf: path!)
     override func viewDidLoad() {
         super.viewDidLoad()
+        MusicModel.shared.RecordsOfSongs.append(theNameOfMusic)
         if searchMusic == nil{
-        player.play()
+            player.play()
         }else{
-            searchplayer!.play()
+            if searchplayer != nil{
+                searchplayer!.play()
+            }
         }
         MainPicture.rotate360DegreeWithImageView(duration: 6, repeatCount: 200)
         time = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {timer in
@@ -176,18 +208,22 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
             }
             self.CurrentTimeLabel.text = self.converTime(time: self.theCurrentTimeOfMusic)
             if self.searchMusic == nil{
-            let index = MusicModel.shared.namesOfMusic.index(of:self.theNameOfMusic!)
-            if self.theCurrentTimeOfMusic == MusicModel.shared.theTimeOfMusic[index!]{
-                switch self.playmode{
-                case .sequence:self.resetMusic(newSong: MusicModel.shared.namesOfMusic[(index!+1)%MusicModel.shared.namesOfMusic.count])
-                case .random:self.resetMusic(newSong: MusicModel.shared.namesOfMusic[MusicModel.shared.namesOfMusic.count.randomNumber])
-                case .cycle: self.resetMusic(newSong: self.theNameOfMusic!)
-                }
-                
+                let index = MusicModel.shared.namesOfMusic.index(of:self.theNameOfMusic)
+                if self.theCurrentTimeOfMusic == MusicModel.shared.theTimeOfMusic[index!]{
+                    switch self.playmode{
+                    case .sequence:self.resetMusic(newSong: MusicModel.shared.namesOfMusic[(index!+1)%MusicModel.shared.namesOfMusic.count])
+                    case .random:self.resetMusic(newSong: MusicModel.shared.namesOfMusic[MusicModel.shared.namesOfMusic.count.randomNumber])
+                    case .cycle: self.resetMusic(newSong: self.theNameOfMusic)
+                    }
+                    
                 }}
         })
         lyricsList.delegate = self
         lyricsList.dataSource = self
+        MusicModel.shared.SaveToDocuMent()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeTolyrics))
+        MainPicture.addGestureRecognizer(tap)
+       DropZone.addInteraction(UIDropInteraction(delegate: self))
     }
     
     
@@ -195,23 +231,46 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     
     @IBAction func LikeOrDislikeThisMusic(_ sender: UIButton) {
         if searchMusic == nil{
-        if sender.currentTitle == "🖤"{
-            sender.setTitle("❤️", for: .normal)
-            MusicModel.shared.theFavoriteSong.append(theNameOfMusic!)
-        }else{
-            sender.setTitle("🖤", for: .normal)
-        }
+            if sender.currentTitle == "🖤"{
+                sender.setTitle("❤️", for: .normal)
+                MusicModel.shared.theFavoriteSong.append(theNameOfMusic)
+            }else{
+                sender.setTitle("🖤", for: .normal)
+            }
         }
         
         
     }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = (info[UIImagePickerController.InfoKey.editedImage] ?? info[UIImagePickerController.InfoKey.originalImage]) as? UIImage{
+            BackGroundImage.image = image
+        }
+    }
+    
+    
+    
+    @IBAction func takePhotoForBackGround(_ sender: UIBarButtonItem) {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker,animated: true)
+        
+    }
+    
+    
     
     @IBOutlet weak var BackGroundImage: UIImageView!{
         didSet{
+            //切换背景图，则更换音乐？？？？？？
             if searchMusic == nil{
-            let imagePath = Bundle.main.url(forResource: theNameOfMusic!, withExtension: "jpg")
-            let data = try! Data(contentsOf: imagePath!)
-            BackGroundImage.image = UIImage(data: data)
+                let imagePath = Bundle.main.url(forResource: "星空背景", withExtension: "jpg")
+                let data = try! Data(contentsOf: imagePath!)
+                BackGroundImage.image = UIImage(data: data)
             }
         }
     }
@@ -223,7 +282,7 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     @IBOutlet weak var MainPicture: UIImageView!{
         didSet{
             if searchMusic == nil{
-            let data = try! Data(contentsOf: imagePath!)
+                let data = try! Data(contentsOf: imagePath!)
                 MainPicture.image = UIImage(data: data)
             }
             let tapGestureRecognize = UITapGestureRecognizer(target: self, action: #selector(changeTolyrics))
@@ -258,17 +317,23 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     }
     
     @IBAction func PlayOrStop(_ sender: UIButton) {
-        if sender.currentTitle == "⏹"{
-            sender.setTitle("▶️", for: .normal)
+        if sender.currentTitle == "⌛"{
+            sender.setTitle("➣", for: .normal)
             player.stop()
             UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 1, delay: 0, options: [], animations: {
-                self.stylus.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi*13/8)
+                self.stylus.layer.anchorPoint = CGPoint(x:0.6, y:0.58)
+                let rotatedTransform2 = self.stylus.layer.transform;
+                 let rotatedTransform = CATransform3DRotate(rotatedTransform2, CGFloat(-45*Double.pi / 180.0), 0.0, 0.0, 1.0);
+                
+                self.stylus.layer.transform = rotatedTransform;
             })
             MainPicture.stopRotate()
         }else{
-            sender.setTitle("⏹", for: .normal)
+            sender.setTitle("⌛", for: .normal)
             player.play()
+            
             UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 1, delay: 0, options: [], animations: {
+                self.stylus.transform = CGAffineTransform.identity
                 self.stylus.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi*16/8)
             })
             MainPicture.rotate360DegreeWithImageView(duration: 6, repeatCount: 200)
@@ -277,24 +342,39 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     
     @IBAction func nextOne(_ sender: UIButton) {
         if searchMusic == nil{
-        let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic!)
-        let newSong = MusicModel.shared.namesOfMusic[(index!+1)%MusicModel.shared.namesOfMusic.count]
-        theNameOfMusic = newSong
-        resetMusic(newSong: newSong)
+            switch playmode{
+            case .sequence,.cycle:
+                let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic)
+                let newSong = MusicModel.shared.namesOfMusic[(index!+1)%MusicModel.shared.namesOfMusic.count]
+                theNameOfMusic = newSong
+                resetMusic(newSong: newSong)
+            case .random:
+                let newSong = MusicModel.shared.namesOfMusic[MusicModel.shared.namesOfMusic.count.randomNumber]
+                theNameOfMusic = newSong
+                resetMusic(newSong: newSong)
+            }
         }
     }
     
     @IBAction func last(_ sender: UIButton) {
         if searchMusic == nil{
-        let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic!)
-        var newSong = ""
-        if index == 0{
-            newSong = MusicModel.shared.namesOfMusic[MusicModel.shared.namesOfMusic.count-1]
-        }else{
-            newSong = MusicModel.shared.namesOfMusic[(index!-1)%MusicModel.shared.namesOfMusic.count]
-        }
-        theNameOfMusic = newSong
-            resetMusic(newSong: newSong)
+            switch playmode{
+            case .sequence,.cycle:
+                let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic)
+                var newSong = ""
+                if index == 0{
+                    newSong = MusicModel.shared.namesOfMusic[MusicModel.shared.namesOfMusic.count-1]
+                }else{
+                    newSong = MusicModel.shared.namesOfMusic[(index!-1)%MusicModel.shared.namesOfMusic.count]
+                }
+                theNameOfMusic = newSong
+                resetMusic(newSong: newSong)
+            case .random:
+                let newSong = MusicModel.shared.namesOfMusic[MusicModel.shared.namesOfMusic.count.randomNumber]
+                theNameOfMusic = newSong
+                resetMusic(newSong: newSong)
+            }
+            
         }
         
     }
@@ -314,6 +394,7 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
         }else{
             cell.textLabel?.text = ""
         }
+        cell.textLabel?.textAlignment = NSTextAlignment.center
         return cell
     }
     
@@ -322,6 +403,7 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     
     
     private func resetMusic(newSong name:String){
+        MusicModel.shared.RecordsOfSongs.append(name)
         theNameOfMusic = name
         let new_path = Bundle.main.url(forResource: name, withExtension: "mp3")
         player = try! AVAudioPlayer(contentsOf: new_path!)
@@ -329,10 +411,10 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
         let newimagePath = Bundle.main.url(forResource: name, withExtension: "jpg")
         let data = try! Data(contentsOf: newimagePath!)
         MainPicture.image = UIImage(data: data)
-        BackGroundImage.image = UIImage(data:data)
         self.title = name
-        if startOrstop.currentTitle == "▶️"{
-            startOrstop.setTitle("⏹", for: .normal)
+        if startOrstop.currentTitle == "➣"{
+            
+            startOrstop.setTitle("⌛", for: .normal)
             UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 1, delay: 0, options: [], animations: {
                 self.stylus.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi*16/8)
             })
@@ -349,12 +431,44 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
         let index = MusicModel.shared.namesOfMusic.index(of:name)
         TrackOfTime.text = converTime(time:MusicModel.shared.theTimeOfMusic[index!])
         ProgressSlider.maximumValue = Float(MusicModel.shared.theTimeOfMusic[index!])
+        MusicModel.shared.SaveToDocuMent()
     }
     @IBAction func returnBackToplay(segue:UIStoryboardSegue){
         let resourceVC = segue.source as? FavoriteSongsTable
         resetMusic(newSong: (resourceVC?.name!)!)
         print((resourceVC?.name!)!)
     }
+    
+    var imagefetcher:ImageFetcher!
+    
+    
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSURL.self) && session.canLoadObjects(ofClass: UIImage.self)
+    }
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        return UIDropProposal(operation: .copy)
+    }
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+        imagefetcher = ImageFetcher(handler: {(url,image) in
+            DispatchQueue.main.async {
+                self.BackGroundImage.image = image
+                
+            }
+            
+        })
+        session.loadObjects(ofClass: NSURL.self, completion: {urls in
+            self.imagefetcher.fetch(urls.first as! URL)
+        })
+        session.loadObjects(ofClass: UIImage.self, completion: {images in
+            self.imagefetcher.backup = images.first as? UIImage
+        })
+    }
+    
+    
+    
+    
+    
+    
     
     
 }

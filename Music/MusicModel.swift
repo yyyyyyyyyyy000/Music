@@ -16,6 +16,31 @@ class MusicModel{
 
     static var shared = MusicModel()
     
+    
+    var RecordsOfSongs  = [String]()
+    var jsonData:Data?{
+        return try! JSONEncoder().encode(RecordsOfSongs)
+    }
+    
+    func SaveToDocuMent(){
+        let tempurl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let url = tempurl.appendingPathComponent("untitle.json")
+        try! jsonData!.write(to: url)
+    }
+    
+    private func getTheRecordsSongs(){
+        let tempurl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let url = tempurl.appendingPathComponent("untitle.json")
+        let data = try? Data(contentsOf: url)
+        if let str = try? JSONDecoder().decode([String].self, from: data ?? Data()){
+            RecordsOfSongs = str
+        }
+    }
+    
+    
+    
+    
+    
     lazy var lyricsOfOneMusic = [String]()
     
     init(){
@@ -33,6 +58,8 @@ class MusicModel{
         lyricsOfOneMusic += [Alllyrics1,Alllyrics2,Alllyrics3,Alllyrics4,Alllyrics5,Alllyrics6,Alllyrics7,Alllyrics8,Alllyrics9,Alllyrics10,Alllyrics11]
         lyricsOfOneMusic += lyricsOfOneMusic
       
+        getTheRecordsSongs()
+        
             }
         }
         
