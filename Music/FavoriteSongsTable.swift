@@ -16,6 +16,12 @@ class FavoriteSongsTable: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let view = UIImageView(image: UIImage(named: "地球"))
+        view.alpha = 0.8
+        tableView.backgroundView = view
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
 
     // MARK: - Table view data source

@@ -34,7 +34,7 @@ class CommentsTableViewController: UITableViewController {
                     let dic = (jsondata[i] as! NSDictionary)["content"] as! String
                     let str = String(unicodeScalarLiteral: dic)
                     print(str)
-                    self.strArray.append(str)
+                    self.strArray[i] = str
                 }
                 self.tableView.reloadData()
             }
@@ -45,11 +45,6 @@ class CommentsTableViewController: UITableViewController {
         
     }
     
-    
-    private func SearchForComments(){
-        
-        
-    }
     
     
     

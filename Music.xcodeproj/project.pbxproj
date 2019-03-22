@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B53C11C4223FD0320083AF76 /* MusicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53C11C3223FD0320083AF76 /* MusicListViewController.swift */; };
+		B58CAFF12245424B0069E3E5 /* SearchMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CAFF02245424B0069E3E5 /* SearchMusicList.swift */; };
 		B59291AF223D13B000501F22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59291AE223D13B000501F22 /* AppDelegate.swift */; };
 		B59291B4223D13B000501F22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B59291B2223D13B000501F22 /* Main.storyboard */; };
 		B59291B6223D13B000501F22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59291B5223D13B000501F22 /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		B53C11C3223FD0320083AF76 /* MusicListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListViewController.swift; sourceTree = "<group>"; };
+		B58CAFF02245424B0069E3E5 /* SearchMusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicList.swift; sourceTree = "<group>"; };
 		B59291AB223D13B000501F22 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B59291AE223D13B000501F22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B59291B3223D13B000501F22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			children = (
 				B59291C0223D13C000501F22 /* Supporting files */,
 				B59291B2223D13B000501F22 /* Main.storyboard */,
+				B58CAFF02245424B0069E3E5 /* SearchMusicList.swift */,
 				B5B0CC2F2241F71B000E8972 /* HistoryRecordTableViewController.swift */,
 				B5B0CC2D2240BBFF000E8972 /* CommentsTableViewController.swift */,
 				B5B0CC2722408B0D000E8972 /* CustomMusicPlayerController.swift */,
@@ -366,6 +369,7 @@
 				B59291AF223D13B000501F22 /* AppDelegate.swift in Sources */,
 				B5929203223DF74600501F22 /* FavoriteSongsTable.swift in Sources */,
 				B59291ED223D182D00501F22 /* MusicPlayer.swift in Sources */,
+				B58CAFF12245424B0069E3E5 /* SearchMusicList.swift in Sources */,
 				B5B0CC2822408B0D000E8972 /* CustomMusicPlayerController.swift in Sources */,
 				B5929201223D48E400501F22 /* MusicModel.swift in Sources */,
 				B5B0CC302241F71B000E8972 /* HistoryRecordTableViewController.swift in Sources */,

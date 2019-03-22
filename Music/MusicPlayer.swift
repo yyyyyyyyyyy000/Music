@@ -8,16 +8,9 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 import MobileCoreServices
 class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIDropInteractionDelegate {
-    
-    
-    
-    
-    
-    
-    
-    
     var theNameOfMusic = "不将就"
     var stylusImage = UIImage(named: "stylus")
     @IBOutlet weak var stylus: UIImageView!{
@@ -191,7 +184,15 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
     lazy var player = try! AVAudioPlayer(contentsOf: path!)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        becomeFirstResponder()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        
+        
         MusicModel.shared.RecordsOfSongs.append(theNameOfMusic)
+        let session = AVAudioSession()
+        try! session.setActive(true, options: [])
+        try! session.setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.default, options: [])
         if searchMusic == nil{
             player.play()
         }else{
@@ -223,11 +224,49 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
         MusicModel.shared.SaveToDocuMent()
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeTolyrics))
         MainPicture.addGestureRecognizer(tap)
-       DropZone.addInteraction(UIDropInteraction(delegate: self))
+        DropZone.addInteraction(UIDropInteraction(delegate: self))
+        
+        setLockView()
     }
     
     
+    override func remoteControlReceived(with event: UIEvent?) {
+        switch event!.subtype {
+        case .remoteControlPlay:  // play按钮
+            player.play()
+        case .remoteControlPause:  // pause按钮
+            player.stop()
+        case .remoteControlNextTrack:  // next
+            let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic)
+            let newSong = MusicModel.shared.namesOfMusic[(index!+1)%MusicModel.shared.namesOfMusic.count]
+            resetMusic(newSong: newSong)
+        case .remoteControlPreviousTrack:  // previous
+            let index = MusicModel.shared.namesOfMusic.index(of:theNameOfMusic)
+            let newIndex:Int?
+            if index == 0{
+                newIndex = MusicModel.shared.namesOfMusic.count
+            }else{
+                newIndex = index!-1
+            }
+            let newSong = MusicModel.shared.namesOfMusic[newIndex!]
+            resetMusic(newSong: newSong)
+        default:
+            break
+        }
+    }
     
+    func setLockView(){
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            // 歌曲名称
+            MPMediaItemPropertyTitle:theNameOfMusic,
+            // 锁屏图片
+            MPMediaItemPropertyArtwork:MPMediaItemArtwork(image: UIImage(named: "地球")!),
+            //
+            MPNowPlayingInfoPropertyPlaybackRate:1.0,
+            MPMediaItemPropertyPlaybackDuration:MusicModel.shared.theTimeOfMusic[MusicModel.shared.namesOfMusic.index(of:theNameOfMusic)!],
+            MPNowPlayingInfoPropertyElapsedPlaybackTime:theCurrentTimeOfMusic
+        ]
+    }
     
     @IBAction func LikeOrDislikeThisMusic(_ sender: UIButton) {
         if searchMusic == nil{
@@ -248,6 +287,7 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
         if let image = (info[UIImagePickerController.InfoKey.editedImage] ?? info[UIImagePickerController.InfoKey.originalImage]) as? UIImage{
             BackGroundImage.image = image
         }
+        picker.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     
@@ -256,7 +296,7 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
         let picker = UIImagePickerController()
         picker.sourceType = .camera
         picker.mediaTypes = [kUTTypeImage as String]
-        picker.allowsEditing = true
+       // picker.allowsEditing = true
         picker.delegate = self
         present(picker,animated: true)
         
@@ -432,6 +472,7 @@ class MusicPlayer: UIViewController,UIPopoverPresentationControllerDelegate,UITa
         TrackOfTime.text = converTime(time:MusicModel.shared.theTimeOfMusic[index!])
         ProgressSlider.maximumValue = Float(MusicModel.shared.theTimeOfMusic[index!])
         MusicModel.shared.SaveToDocuMent()
+        setLockView()
     }
     @IBAction func returnBackToplay(segue:UIStoryboardSegue){
         let resourceVC = segue.source as? FavoriteSongsTable

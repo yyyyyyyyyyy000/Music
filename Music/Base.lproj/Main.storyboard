@@ -79,6 +79,15 @@
                                     <segue destination="4uc-tm-BJO" kind="showDetail" identifier="抖音" id="zxl-GP-EzM"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S1p-qs-Jdf">
+                                <rect key="frame" x="156" y="107" width="46" height="30"/>
+                                <state key="normal" title="欧美风">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="2t0-Vl-cLA" kind="showDetail" id="aaQ-Yp-hMQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -87,13 +96,16 @@
                             <constraint firstItem="uLy-pf-aWj" firstAttribute="top" secondItem="6B7-Cc-VMW" secondAttribute="top" id="4Xg-Hh-HP5"/>
                             <constraint firstItem="uLy-pf-aWj" firstAttribute="leading" secondItem="djc-mx-1q3" secondAttribute="leading" id="5oo-Fr-QaL"/>
                             <constraint firstItem="heX-oR-uas" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fJQ-VF-BBn" secondAttribute="trailing" constant="8" symbolic="YES" id="6k2-dU-eKI"/>
+                            <constraint firstItem="S1p-qs-Jdf" firstAttribute="leading" secondItem="fJQ-VF-BBn" secondAttribute="trailing" constant="34" id="AF7-wM-SSx"/>
                             <constraint firstItem="djc-mx-1q3" firstAttribute="leading" secondItem="OvC-ps-MHE" secondAttribute="leading" id="H4G-Yh-azC"/>
                             <constraint firstAttribute="trailing" secondItem="djc-mx-1q3" secondAttribute="trailing" id="OEI-RS-1gY"/>
                             <constraint firstItem="6B7-Cc-VMW" firstAttribute="trailing" secondItem="heX-oR-uas" secondAttribute="trailing" constant="77" id="UyR-51-4zc"/>
                             <constraint firstItem="fJQ-VF-BBn" firstAttribute="top" secondItem="uLy-pf-aWj" secondAttribute="bottom" constant="8" symbolic="YES" id="YNg-sO-FCb"/>
                             <constraint firstItem="fJQ-VF-BBn" firstAttribute="leading" secondItem="6B7-Cc-VMW" secondAttribute="leading" constant="47" id="Zgl-Kb-Icq"/>
                             <constraint firstItem="djc-mx-1q3" firstAttribute="bottom" secondItem="6B7-Cc-VMW" secondAttribute="bottom" id="m1x-1g-MJz"/>
+                            <constraint firstItem="S1p-qs-Jdf" firstAttribute="bottom" secondItem="heX-oR-uas" secondAttribute="bottom" id="oLg-7u-D0L"/>
                             <constraint firstItem="uLy-pf-aWj" firstAttribute="trailing" secondItem="djc-mx-1q3" secondAttribute="trailing" id="qQ6-Ya-oTl"/>
+                            <constraint firstItem="S1p-qs-Jdf" firstAttribute="centerY" secondItem="fJQ-VF-BBn" secondAttribute="centerY" id="wNm-Dx-Bi2"/>
                             <constraint firstItem="heX-oR-uas" firstAttribute="centerY" secondItem="fJQ-VF-BBn" secondAttribute="centerY" id="z8M-SP-lzP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6B7-Cc-VMW"/>
@@ -490,6 +502,43 @@
             </objects>
             <point key="canvasLocation" x="2120.8000000000002" y="-732.68365817091455"/>
         </scene>
+        <!--Search Music List-->
+        <scene sceneID="9YQ-0V-SXc">
+            <objects>
+                <tableViewController id="2t0-Vl-cLA" customClass="SearchMusicList" customModule="Music" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="8to-Vw-KLi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentifier" textLabel="a7c-Za-8eX" style="IBUITableViewCellStyleDefault" id="Luf-ga-HK5">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Luf-ga-HK5" id="xpP-Y1-eFK">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a7c-Za-8eX">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2t0-Vl-cLA" id="3xk-wE-1M6"/>
+                            <outlet property="delegate" destination="2t0-Vl-cLA" id="MfO-Gh-wU1"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dUd-iU-RRS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3013" y="-495"/>
+        </scene>
         <!--Favorite Songs Table-->
         <scene sceneID="qSw-Y5-S2f">
             <objects>
@@ -515,6 +564,7 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <segue destination="ZsD-FG-SHs" kind="unwind" unwindAction="returnBackToplayWithSegue:" id="taU-8Y-JXJ"/>
                                 </connections>
@@ -529,7 +579,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wp5-6W-sNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ZsD-FG-SHs" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3186" y="-486"/>
+            <point key="canvasLocation" x="4222" y="-528"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3HA-v1-S0x">
